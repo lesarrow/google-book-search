@@ -1,0 +1,17 @@
+.book-search-form {
+
+}
+
+.book-search-search {
+    background-color: gray;
+    padding: 10px 0;
+}
+
+.book-search-filters {
+    background-color: lightgray;
+    padding: 10px 0;
+}
+
+.label-book-type {
+    margin-left: 15px;
+}

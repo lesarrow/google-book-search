@@ -1,26 +1,68 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import './App.css';
+import BookSearchForm from './BookSearchForm';
+import BookList from './BookList';
+
+
+class App extends React.Component {
+
+  static defaultProps = {
+    books: []
+  }
+
+  constructor(props) {
+
+    super(props);
+
+    this.state = {
+      books: props.books
+    }
+
+    this.setBookSearchResult = this.setBookSearchResult.bind(this)
+  }
+
+  setBookSearchResult(bookData) {
+
+    const newBooks = bookData.map(book => {
+
+      let newBook = {}
+      newBook.title = book.volumeInfo.title;
+      newBook.author = book.volumeInfo.authors[0];
+
+      newBook.image = "alt";
+      console.log(book);
+      if (book.volumeInfo.imageLinks != undefined)
+        newBook.image = book.volumeInfo.imageLinks.thumbnail;
+
+      if (book.saleInfo.retailPrice != undefined)
+        newBook.price = book.saleInfo.retailPrice.amount;
+      else if (book.saleInfo.saleability != undefined)
+        newBook.price = book.saleInfo.saleability;
+
+      newBook.summary = "";
+      if (book.volumeInfo.description != undefined)
+        newBook.summary = book.volumeInfo.summary;
+      
+      return newBook;
+    });
+
+    this.setState({
+      books: newBooks
+    })
+  }
+
+
+  render() {
+
+    return (
+      <div className="App">
+        <h1 className="app-title">Google Book Search</h1>
+        <BookSearchForm setBookSearchResult={this.setBookSearchResult}/>
+        <BookList books={this.state.books} />
+      </div>      
+    );
+  }
 }
 
 export default App;
