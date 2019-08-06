@@ -29,7 +29,6 @@ class BookSearchForm extends React.Component {
             url += '&filter=free-ebooks';
         }
 
-        console.log(`The url is: ${url}`);
         fetch(url).then(response => response.json()).then(data => {
             console.log(data);
             setBookSearchResult(data.items);

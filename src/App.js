@@ -31,18 +31,17 @@ class App extends React.Component {
       newBook.author = book.volumeInfo.authors[0];
 
       newBook.image = "alt";
-      console.log(book);
-      if (book.volumeInfo.imageLinks != undefined)
+       if (book.volumeInfo.imageLinks != undefined)
         newBook.image = book.volumeInfo.imageLinks.thumbnail;
 
       if (book.saleInfo.retailPrice != undefined)
-        newBook.price = book.saleInfo.retailPrice.amount;
+        newBook.price = "$" + book.saleInfo.retailPrice.amount;
       else if (book.saleInfo.saleability != undefined)
         newBook.price = book.saleInfo.saleability;
 
       newBook.summary = "";
-      if (book.volumeInfo.description != undefined)
-        newBook.summary = book.volumeInfo.summary;
+      if (book.searchInfo != undefined)
+        newBook.summary = book.searchInfo.textSnippet;
       
       return newBook;
     });
